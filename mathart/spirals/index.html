@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #canvas {
+      width: 800px;
+      height: 800px;
+      border: 1px solid black;
+    }
+
+    #nvert {
+      width: 600px;
+    }
+    }
+  </style>
+  <script src="spirals.js" defer></script>
+</head>
+
+<body>
+  <p>
+    Points: <span id='points_span'></span>
+    <input type="range" class="slider" id="points" min="1" max="2000" value="500">
+  </p>
+  <p>
+    Angle (°x100): <span id='angle_span'></span>
+    <input type="range" class="slider" id="angle" min="1" max="6280" value="2399">
+  </p>
+  <canvas id="canvas"></canvas>
+</body>
+
+</html>
