@@ -10,7 +10,7 @@ function fix_dpi() {
     canvas.setAttribute('height', dpi * styleValue('height'));
 }
 
-var points, angle;
+var points, angle, color;
 const colors = [];
 
 function init_colors() {
@@ -51,6 +51,7 @@ function init_colors() {
     }
 }
 
+// Inspired by https://aminyakubu.github.io/flower.html
 function draw() {
     var w = canvas.width, h = canvas.height;
     ctx.lineWidth = 1;
@@ -59,10 +60,12 @@ function draw() {
     var x = w/2, y = h/2;
     for (i = 1; i < points; i++) {
         ctx.beginPath();
-        ctx.strokeStyle = colors[i % colors.length];
-        var j = i - 1;
-        ctx.moveTo(x + j*Math.sin(j*angle), y + j*Math.cos(j*angle));
-        ctx.lineTo(x + i*Math.sin(i*angle), y + i*Math.cos(i*angle));
+        if (color) {
+            ctx.strokeStyle = colors[i % colors.length];
+        }
+        var j = i - 1, a = angle/180*Math.PI;
+        ctx.moveTo(x + j*Math.sin(j*a), y + j*Math.cos(j*a));
+        ctx.lineTo(x + i*Math.sin(i*a), y + i*Math.cos(i*a));
         ctx.stroke();
     }
 }
@@ -72,17 +75,20 @@ function init() {
     init_colors();
     var a_in = document.getElementById('angle');
     var p_in = document.getElementById('points');
+    var c_in = document.getElementById('color');
     var a_out = document.getElementById('angle_span');
     var p_out = document.getElementById('points_span');
     f = function () {
-        angle = a_in.value/1000;
+        angle = a_in.value;
         points = p_in.value;
+        color = c_in.checked;
         a_out.innerHTML = angle;
         p_out.innerHTML = points;
         draw();
     }
     a_in.oninput = f;
     p_in.oninput = f;
+    c_in.oninput = f;
     f();
 }
 
